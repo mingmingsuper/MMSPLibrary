@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.mmsp.library.R
 import com.mmsp.library.databinding.ActivityTakePhotoBinding
 import com.mmsp.library.uikit.BaseActivity
+import com.mmsp.library.utils.FileUri2PathUtils
 import com.mmsp.library.utils.FileUtils
 import com.mmsp.library.utils.PermissionUtils
 import java.io.File
@@ -27,7 +28,8 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
     private val requestCodeTakePhoto = 1000
     private val requestCodeSelectPhoto = 1001
     private val requestCodePermission = 1002
-    private val requestCodeCutting = 1003
+    private val requestCodePermissionGallery = 1003
+    private val requestCodeCutting = 1004
 
     private var outputImage: File? = null
 
@@ -97,7 +99,21 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
     }
 
     private fun selectPhoto() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!PermissionUtils.checkPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
+                PermissionUtils.requestPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCodePermissionGallery)
+            } else {
+                openGallery()
+            }
+        } else {
+           openGallery()
+        }
+    }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, null)
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+        startActivityForResult(intent, requestCodeSelectPhoto)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,6 +139,17 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
                     }
                 }
             }
+
+            requestCodeSelectPhoto -> {
+                Log.d(tag, "SELECT_PHOTO")
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.data?.apply {
+                        Log.d(tag, "data:$this")
+                        val path = FileUri2PathUtils.getFileAbsolutePath(this@TakePhotoActivity, this)
+                        Glide.with(this@TakePhotoActivity).load(path).into(mBinding.imageView)
+                    }
+                }
+            }
         }
     }
 
@@ -136,6 +163,11 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
             requestCodePermission -> {
                 if (PermissionUtils.checkPermission(this, permissions)) {
                     takePhoto()
+                }
+            }
+            requestCodePermissionGallery -> {
+                if (PermissionUtils.checkPermission(this, permissions)) {
+                    selectPhoto()
                 }
             }
         }
