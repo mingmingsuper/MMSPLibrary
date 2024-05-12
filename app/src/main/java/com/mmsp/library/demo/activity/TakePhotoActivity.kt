@@ -67,12 +67,12 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
             Manifest.permission.CAMERA
         )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
-            val intent = Intent()
-            intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-            startActivity(intent)
-            return
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager()) {
+//            val intent = Intent()
+//            intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
+//            startActivity(intent)
+//            return
+//        }
 
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             Log.d(tag, "外部存储卡不可用")
