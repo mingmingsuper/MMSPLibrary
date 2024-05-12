@@ -11,8 +11,8 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.mmsp.library.R
-import com.mmsp.library.uikit.BaseActivity
 import com.mmsp.library.databinding.ActivityWebBrowserBinding
+import com.mmsp.library.uikit.BaseActivity
 import com.mmsp.library.utils.WidgetUtils
 
 class WebBrowserActivity : BaseActivity<ActivityWebBrowserBinding>() {

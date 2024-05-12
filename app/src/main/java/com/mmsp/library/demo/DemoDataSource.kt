@@ -2,7 +2,6 @@ package com.mmsp.library.demo
 
 import android.app.Activity
 import android.content.Context
-import com.mmsp.library.MainActivity
 import com.mmsp.library.R
 import com.mmsp.library.demo.activity.TakePhotoActivity
 

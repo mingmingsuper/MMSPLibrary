@@ -1,19 +1,14 @@
 package com.mmsp.library
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.mmsp.library.uikit.BaseActivity
 import com.mmsp.library.databinding.ActivityMainBinding
 import com.mmsp.library.demo.DemoDataSource
 import com.mmsp.library.demo.DemoMenuType
 import com.mmsp.library.demo.DemoRoute
 import com.mmsp.library.demo.MainMenuItem
+import com.mmsp.library.uikit.BaseActivity
 import com.mmsp.library.utils.RecyclerListener
 import com.mmsp.library.utils.RecyclerViewUtils
 

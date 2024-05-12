@@ -20,7 +20,6 @@ import com.mmsp.library.utils.FileUri2PathUtils
 import com.mmsp.library.utils.FileUtils
 import com.mmsp.library.utils.PermissionUtils
 import java.io.File
-import java.io.IOException
 
 class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListener {
 
