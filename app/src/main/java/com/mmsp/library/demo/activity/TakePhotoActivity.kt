@@ -84,14 +84,7 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
         }
         val outputFile = FileUtils.createUploadTempFile(this)
         outputImage = outputFile
-        try {
-            if (outputFile.exists()) {
-                outputFile.delete()
-            }
-            outputFile.createNewFile()
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-        }
+
         if (outputFile.exists()) {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

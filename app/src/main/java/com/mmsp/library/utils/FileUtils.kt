@@ -3,6 +3,7 @@ package com.mmsp.library.utils
 import android.content.Context
 import android.os.Environment
 import java.io.File
+import java.io.IOException
 
 class FileUtils {
     companion object {
@@ -15,6 +16,14 @@ class FileUtils {
             }
             val uploadImageName = "upload_image_${System.currentTimeMillis()}"
             val outputFile = File(outDir, uploadImageName)
+            try {
+                if (outputFile.exists()) {
+                    outputFile.delete()
+                }
+                outputFile.createNewFile()
+            } catch (ex: IOException) {
+                ex.printStackTrace()
+            }
             return outputFile
         }
 
