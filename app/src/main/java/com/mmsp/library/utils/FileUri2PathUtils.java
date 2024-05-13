@@ -14,10 +14,13 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 
 public class FileUri2PathUtils {
 
@@ -164,61 +167,67 @@ public class FileUri2PathUtils {
     /**
      * Android 10 以上适配
      *
-     * @param context
-     * @param uri
-     * @return
+     * @param context 上下文
+     * @param uri 文件uri
+     * @return 文件路径
      */
     @RequiresApi(api = Build.VERSION_CODES.Q)
     private static String uriToFileApiQ(Context context, Uri uri) {
-        File file = null;
-        if (uri == null) {
+        if (uri == null || uri.getScheme() == null) {
             return null;
         }
+        File file;
         String scheme = uri.getScheme();
-        if (scheme == null) {
-            return null;
-        }
         //android10以上转换
         if (scheme.equalsIgnoreCase(ContentResolver.SCHEME_FILE)) {
             String path = uri.getPath();
             if (path != null) {
                 file = new File(path);
+            } else {
+                return null;
             }
         } else if (scheme.equals(ContentResolver.SCHEME_CONTENT)) {
             //把文件复制到沙盒目录
-            ContentResolver contentResolver = context.getContentResolver();
-            Cursor cursor = contentResolver.query(uri, null, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                String displayName = "";
-                if (index >= 0) {
-                    displayName = cursor.getString(index);
-                }
-                try {
-                    InputStream inputStream = contentResolver.openInputStream(uri);
-                    File cache = new File(context.getExternalCacheDir().getAbsolutePath(), Math.round((Math.random() + 1) * 1000) + displayName);
-                    FileOutputStream outputStream = new FileOutputStream(cache);
-                    if (inputStream != null) {
-                        byte[] buffer = new byte[4096];
-                        int byteRead;
-                        while (-1 != (byteRead = inputStream.read(buffer))) {
-                            outputStream.write(buffer, 0, byteRead);
-                        }
-                    }
-                    file = cache;
-                    cursor.close();
-                    outputStream.close();
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                } catch (IOException e) {
-                    Log.e("FileUtils", "uriToFileApiQ: " + e.getMessage());
-                }
-            }
-        }
-        if (file == null) {
-            return null;
+            file = copyContentUriToFile(context, uri);
+        } else {
+            return  null;
         }
         return file.getAbsolutePath();
+    }
+
+    private static File copyContentUriToFile(Context context, Uri uri) {
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = null;
+        File file = null;
+        try {
+            cursor = contentResolver.query(uri, null, null, null, null);
+            if (cursor != null && cursor.moveToFirst()) {
+                int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+                String displayName = index >= 0 ? cursor.getString(index) : "unknown";
+                file = createUniqueFile(context.getExternalCacheDir(), displayName);
+                try (InputStream inputStream = contentResolver.openInputStream(uri);
+                     BufferedInputStream input = new BufferedInputStream(inputStream);
+                     FileOutputStream outputStream = new FileOutputStream(file);
+                     BufferedOutputStream output = new BufferedOutputStream(outputStream)) {
+                    byte[] buffer = new byte[4096];
+                    int byteRead;
+                    while ((byteRead = input.read(buffer)) != -1) {
+                        output.write(buffer, 0, byteRead);
+                    }
+                }
+            }
+        } catch (IOException | SecurityException e) {
+            Log.e("FileUtils", "copyContentUriToFile: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return file;
+    }
+
+    private static File createUniqueFile(File directory, String baseName) {
+        String uniqueFileName = UUID.randomUUID().toString() + "_" + baseName;
+        return new File(directory, uniqueFileName);
     }
 }
