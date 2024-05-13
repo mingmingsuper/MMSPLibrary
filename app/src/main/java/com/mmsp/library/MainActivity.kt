@@ -11,15 +11,15 @@ import com.mmsp.library.demo.MainMenuItem
 import com.mmsp.library.uikit.BaseActivity
 import com.mmsp.library.uikit.recyclerview.RecyclerListener
 import com.mmsp.library.uikit.recyclerview.RecyclerViewUtils
+import com.mmsp.library.uikit.recyclerview.addListener
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
-    private lateinit var list:List<MainMenuItem>
+    private lateinit var list: List<MainMenuItem>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
 
 
     override fun layoutId(): Int {
@@ -32,9 +32,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun initRecyclerView() {
-        mBinding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        RecyclerViewUtils.addRecyclerListener(this, mBinding.recyclerView, object :
+        mBinding.recyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mBinding.recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                this,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        mBinding.recyclerView.addListener(this, object :
             RecyclerListener {
             override fun onClick(position: Int) {
                 val item = list[position]
