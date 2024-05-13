@@ -9,8 +9,8 @@ import com.mmsp.library.demo.DemoMenuType
 import com.mmsp.library.demo.DemoRoute
 import com.mmsp.library.demo.MainMenuItem
 import com.mmsp.library.uikit.BaseActivity
-import com.mmsp.library.utils.RecyclerListener
-import com.mmsp.library.utils.RecyclerViewUtils
+import com.mmsp.library.uikit.recyclerview.RecyclerListener
+import com.mmsp.library.uikit.recyclerview.RecyclerViewUtils
 
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
@@ -34,7 +34,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun initRecyclerView() {
         mBinding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mBinding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        RecyclerViewUtils.addRecyclerListener(this, mBinding.recyclerView, object : RecyclerListener {
+        RecyclerViewUtils.addRecyclerListener(this, mBinding.recyclerView, object :
+            RecyclerListener {
             override fun onClick(position: Int) {
                 val item = list[position]
                 when (item.type) {

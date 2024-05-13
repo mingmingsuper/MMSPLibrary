@@ -1,4 +1,4 @@
-package com.mmsp.library.utils
+package com.mmsp.library.uikit.recyclerview
 
 import android.content.Context
 import android.util.Log

@@ -43,6 +43,7 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
         mBinding.takePhoto.setOnClickListener(this)
         mBinding.selectPhoto.setOnClickListener(this)
         mBinding.takeVideo.setOnClickListener(this)
+        mBinding.selectVideo.setOnClickListener(this)
     }
 
     override fun initData() {
@@ -62,6 +63,10 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
 
             R.id.takeVideo -> {
                 takeVideo()
+            }
+
+            R.id.selectVideo -> {
+                selectVideo()
             }
         }
     }
@@ -154,6 +159,25 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
 
             startActivityForResult(intent, requestCodeTakeVideo)
         }
+    }
+
+    fun selectVideo() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!PermissionUtils.checkPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
+                PermissionUtils.requestPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCodePermissionGallery)
+            } else {
+                openGalleryVideo()
+            }
+        } else {
+            openGalleryVideo()
+        }
+    }
+
+    private fun openGalleryVideo() {
+        val intent = Intent(Intent.ACTION_PICK, null)
+//        val intentVideo = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI) // 从相册获取视频
+        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*")
+        startActivityForResult(intent, requestCodeSelectPhoto)
     }
 
 
