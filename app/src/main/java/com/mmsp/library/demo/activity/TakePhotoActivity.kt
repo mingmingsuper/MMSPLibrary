@@ -161,7 +161,7 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
         }
     }
 
-    fun selectVideo() {
+    private fun selectVideo() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!PermissionUtils.checkPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE))) {
                 PermissionUtils.requestPermission(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), requestCodePermissionGallery)
@@ -175,8 +175,7 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
 
     private fun openGalleryVideo() {
         val intent = Intent(Intent.ACTION_PICK, null)
-//        val intentVideo = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI) // 从相册获取视频
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "video/*")
+        intent.setDataAndType(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "video/*")
         startActivityForResult(intent, requestCodeSelectPhoto)
     }
 

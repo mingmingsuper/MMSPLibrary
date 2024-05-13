@@ -52,7 +52,7 @@
         <activity
             android:name=".demo.activity.TakePhotoActivity"
             android:exported="false"
-            android:label="@string/activity_title_get_photo" />
+            android:label="@string/activity_title_get_photo"/>
         <activity
             android:name=".web.WebBrowserActivity"
             android:exported="false" />
