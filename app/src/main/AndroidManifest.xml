@@ -2,15 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <!--像谷歌应用商店或应用宝这类应用才可以开启此权限，否则应用商店不允许上架-->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <queries>
+
+        <!--示例，如果在Android 11以上需要打开特定应用必须在这里申请才可以-->
+        <package android:name="com.google.android.gms.oss.licenses.ui" />
+
         <intent>
-            <category android:name="android.intent.category.LAUNCHER"/>
+            <category android:name="android.intent.category.LAUNCHER" />
         </intent>
     </queries>
 
@@ -41,7 +52,7 @@
         <activity
             android:name=".demo.activity.TakePhotoActivity"
             android:exported="false"
-            android:label="@string/activity_title_get_photo"/>
+            android:label="@string/activity_title_get_photo" />
         <activity
             android:name=".web.WebBrowserActivity"
             android:exported="false" />

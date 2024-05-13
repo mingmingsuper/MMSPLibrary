@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager.NameNotFoundException
+import android.os.Build
 
 class ActivityUtils {
     companion object {
@@ -12,6 +13,14 @@ class ActivityUtils {
             val intent = Intent(context, cls)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(intent)
+        }
+
+        fun startApp(context: Context, packageName: String) {
+            //Android 11及以上需要在AndroidManifest中申请queries中申请已知package才可以
+            val intent = context.packageManager.getLaunchIntentForPackage(packageName)
+            intent?.apply {
+                context.startActivity(this)
+            }
         }
 
         fun startApplication(context: Context, packageName: String) {

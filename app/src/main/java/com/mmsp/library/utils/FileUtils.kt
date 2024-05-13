@@ -8,13 +8,13 @@ import java.io.IOException
 class FileUtils {
     companion object {
 
-        fun createUploadTempFile(context: Context): File {
+        fun createUploadTempFile(context: Context, extension: String): File {
             val cacheDicFile = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            val outDir = File(cacheDicFile, "camera_photos") //"output_image.jpg"
+            val outDir = File(cacheDicFile, "camera_photos")
             if (!outDir.exists()) {
                 outDir.mkdirs()
             }
-            val uploadImageName = "upload_image_${System.currentTimeMillis()}"
+            val uploadImageName = "upload_image_${System.currentTimeMillis()}.${extension}"
             val outputFile = File(outDir, uploadImageName)
             try {
                 if (outputFile.exists()) {

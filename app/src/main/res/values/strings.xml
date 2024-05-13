@@ -3,4 +3,5 @@
     <string name="activity_title_get_photo">获取照片</string>
     <string name="button_take_photo">拍照</string>
     <string name="button_select_photo">选择照片</string>
+    <string name="button_take_video">拍视频</string>
 </resources>
