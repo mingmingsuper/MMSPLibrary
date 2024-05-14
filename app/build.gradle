@@ -6,6 +6,16 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def baseVersion = "1.0.0"
+
+static def buildTime() {
+    return new Date().format('MMddHH')
+}
+
+static def autoVersionCode() {
+    return (int)(System.currentTimeMillis() / 1000 / 60)
+}
+
 android {
     namespace 'com.mmsp.library'
     compileSdk 34
@@ -14,8 +24,8 @@ android {
         applicationId "com.mmsp.library"
         minSdk 21
         targetSdk 34
-        versionCode 1
-        versionName "1.0"
+        versionCode autoVersionCode()
+        versionName "${baseVersion}${buildTime()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
