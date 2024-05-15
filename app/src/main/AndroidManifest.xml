@@ -6,9 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
-    <!--像谷歌应用商店或应用宝这类应用才可以开启此权限，否则应用商店不允许上架-->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> <!-- 像谷歌应用商店或应用宝这类应用才可以开启此权限，否则应用商店不允许上架 -->
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -17,14 +15,13 @@
 
     <queries>
 
-        <!--示例，如果在Android 11以上需要打开特定应用必须在这里申请才可以-->
+        <!-- 示例，如果在Android 11以上需要打开特定应用必须在这里申请才可以 -->
         <package android:name="com.google.android.gms.oss.licenses.ui" />
 
         <intent>
             <category android:name="android.intent.category.LAUNCHER" />
         </intent>
     </queries>
-
 
     <application
         android:allowBackup="true"
@@ -36,6 +33,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".demo.activity.DocumentAccessActivity"
+            android:exported="false"
+            android:label="@string/activity_title_document_access"/>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -52,7 +53,7 @@
         <activity
             android:name=".demo.activity.TakePhotoActivity"
             android:exported="false"
-            android:label="@string/activity_title_get_photo"/>
+            android:label="@string/activity_title_get_photo" />
         <activity
             android:name=".web.WebBrowserActivity"
             android:exported="false" />

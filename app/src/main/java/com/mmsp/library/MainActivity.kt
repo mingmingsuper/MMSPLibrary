@@ -45,9 +45,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             override fun onClick(position: Int) {
                 val item = list[position]
                 when (item.type) {
-                    DemoMenuType.TakePhoto -> {
-                        DemoRoute.forwardDemo(this@MainActivity, item.activity)
-                    }
+                    DemoMenuType.TakePhoto -> DemoRoute.forwardDemo(this@MainActivity, item.activity)
+                    DemoMenuType.DocumentAccess -> DemoRoute.forwardDemo(this@MainActivity, item.activity)
                 }
             }
         })
