@@ -126,6 +126,12 @@ class TakePhotoActivity : BaseActivity<ActivityTakePhotoBinding>(), OnClickListe
 //        val intentVideo = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI) // 从相册获取视频
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
         startActivityForResult(intent, requestCodeSelectPhoto)
+
+        //SAF访问
+//        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+//        intent.addCategory(Intent.CATEGORY_OPENABLE)
+//        intent.type = "image/*"
+//        startActivityForResult(intent, 100)
     }
 
     private fun takeVideo() {
