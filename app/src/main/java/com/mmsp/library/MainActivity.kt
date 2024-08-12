@@ -47,6 +47,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 when (item.type) {
                     DemoMenuType.TakePhoto -> DemoRoute.forwardDemo(this@MainActivity, item.activity)
                     DemoMenuType.DocumentAccess -> DemoRoute.forwardDemo(this@MainActivity, item.activity)
+                    DemoMenuType.AsyncTask -> DemoRoute.forwardDemo(this@MainActivity, item.activity)
                 }
             }
         })

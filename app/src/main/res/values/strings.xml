@@ -2,9 +2,13 @@
     <string name="app_name">工具类库集合</string>
     <string name="activity_title_get_photo">获取照片</string>
     <string name="activity_title_document_access">文档访问</string>
+    <string name="activity_title_async_task">替代AsyncTask</string>
     <string name="button_take_photo">拍照</string>
     <string name="button_select_photo">选择照片</string>
     <string name="button_take_video">拍视频</string>
     <string name="button_select_video">选择视频</string>
     <string name="button_create_document">创建pdf文档</string>
+    
+    <string name="start_task">开始Task</string>
+    <string name="cancel_task">取消Task</string>
 </resources>
